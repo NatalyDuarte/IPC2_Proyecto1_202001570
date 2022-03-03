@@ -1,0 +1,10 @@
+ digraph G { 
+
+        node [ shape=none fontname=Helvetica ]
+        n [ label = <
+            <table border="3" >
+        <tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+                 </table>
+             > ]
+            }
+                    

@@ -1,0 +1,23 @@
+digraph G {
+node[shape=box fillcolor="pink:yellow" style =filled]
+ subgraph cluster_p{
+            label= "REPORTE CELDA"
+            bgcolor = "pink"nodoP[label="pisicodi1" shape="box"];
+name0[label="B" fillcolor="black" shape="box"];
+name1[label="W" fillcolor="white" shape="box"];
+name2[label="W" fillcolor="white" shape="box"];
+name3[label="B" fillcolor="black" shape="box"];
+name4[label="W" fillcolor="white" shape="box"];
+name5[label="W" fillcolor="white" shape="box"];
+name6[label="W" fillcolor="white" shape="box"];
+name7[label="B" fillcolor="black" shape="box"];
+nodoP -> name0;
+nodoP -> name1;
+nodoP -> name2;
+nodoP -> name3;
+name0 -> name4;
+name1 -> name5;
+name2 -> name6;
+name3 -> name7;
+}
+}
