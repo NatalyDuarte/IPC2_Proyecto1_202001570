@@ -44,6 +44,7 @@ def Menu(opcion):
             pisos.ordenar()
             print("Pisos cargados ordenados alfabeticamente")
             pisos.imprimirSimpleEnla()
+            Inicio()
         else:
             print("No se ha cargado el archivo")
             Inicio()
@@ -55,6 +56,7 @@ def Menu(opcion):
             nome.lista_patron.OrdenarPatron()
             print("Patrones cargados ordenados alfabeticamente")
             nome.lista_patron.imprimirSimpleEnlaPa()
+            Inicio()
         else:
             print("No se ha cargado el archivo")
             Inicio()
@@ -88,7 +90,11 @@ def Menu(opcion):
             print("Ingrese el codigo de patron con el que quiere cambiar:")
             pat1 = input(">. ")
             elem11= nome.lista_patron.getPatron(pat1)
-            Inicio1()
+            global auxi
+            global auxi1
+            auxi="No"
+            auxi1="No"
+            Inicio1(pat,nome,elem1,elem11,auxi,auxi1)
         else:
             print("No se ha cargado el archivo")
             Inicio()
@@ -98,35 +104,40 @@ def Menu(opcion):
     else:
         print("\n====¡OPCION NO EXISTENTE!====")
 
-def Inicio1():
+def Inicio1(pat,nome,elem1,elem11,auxi,auxi1):
     op = ""
     while True:
-        print("========= ROBOT PISOS ARTESANALES =========")
-        print("|1. Costo mínimo para realizar el cambio  |")
-        print("|2. Instrucciones para hacer el cambio    |")
-        print("|3. Mostrar graficamente el nuevo patron  |")
-        print("|4. Menu principal                        |")
-        print("===========================================")
+        print("=============== ROBOT PISOS ARTESANALES ==============")
+        print("|1. Costo mínimo para realizar el cambio             |")
+        print("|2. Instrucciones para hacer el cambio por consola   |")
+        print("|3. Instrucciones para hacer el cambio por archivo   |")
+        print("|4. Mostrar graficamente el nuevo patron             |")
+        print("|5. Menu principal                                   |")
+        print("======================================================")
+        print("Para que cada funcion cumpla su objetivo debe seleccionar cada opcion segun su número correspondiente")
         print("Ingrese Opcion:")
         op = int(input(">. "))
-        Menu1(op)
+        Menu1(pat,op,nome,elem1,elem11,auxi,auxi1)
         print("\n")
-        if (op >= 1 and op <= 4):
+        if (op >= 1 and op <= 5):
             break
 
-def Menu1(op):
+def Menu1(pat,op,nome,elem1,elem11,auxi,auxi1):
     if op == 1:
-        print("Costo minimo")
+        Costominimo(nome,elem1, elem11)
+        Inicio1(pat,nome,elem1,elem11,auxi,auxi1)
     elif op == 2:
-        #Buscando(elem1, elem11)
-        opc=5
-        Menu(opc)
+        Buscando(pat,nome,elem1, elem11,auxi,auxi1)
+        Inicio1(pat,nome,elem1,elem11,auxi,auxi1)
     elif op == 3:
-        #Grafica4(nome,elem1)
-        opc=5
-        Menu(opc)
+        Genrartxt(pat)
+        print("Generado exitosamente")
+        Inicio1(pat,nome,elem1,elem11,auxi,auxi1)
     elif op == 4:
-        op=5
+        Grafica4(nome,elem1)
+        Inicio1(pat,nome,elem1,elem11,auxi,auxi1)
+    elif op == 5:
+        op=6
         Inicio()
     else:
         print("\n====¡OPCION NO EXISTENTE!====")
@@ -212,11 +223,66 @@ def Grafica4(nome,patron):
         os.system('dot.exe -Tpdf graficapatron.dot -o '+patron.codigo+'_reporte.pdf')
         os.startfile(patron.codigo+'_reporte.pdf')
 
-
-def Buscando( pat1, pat2):
+def Costominimo(nome, pat1, pat2):
     tmp = pat1.lista_celda.inicio2
     tmp1= pat2.lista_celda.inicio2
+    contaFi=0
+    contaSi=0
+    conta=0
+    conti=0
+    while tmp is not None:
+        tante=tmp.anterior2
+        tsigue=tmp.siguiente2
+        if (tmp.Ro == tmp1.Ro) and (tmp.Co == tmp1.Co): 
+            if(tmp.color != tmp1.color):
+                if(float(nome.Si)<=float(nome.Fi)):
+                    Inter(tante,tsigue,tmp,tmp1,auxi,auxi1)
+                    contaSi +=1
+                else:
+                    Vol(tante,tsigue,tmp,tmp1)
+                    contaFi +=1
+            else:
+                conti=0
+        else:
+            conti=0
+        tmp = tmp.siguiente2
+        tmp1= tmp1.siguiente2
+    conta=float(float(nome.Fi)*contaFi)+float(float(nome.Si)*contaSi)
+    print("El costo minimo es de: Q."+ str(conta))
+
+def Inter(tante,tsigue,tmp,tmp1,auxi,auxi1):
+    global auxiliar
+    global auxiliar1 
+    auxiliar=""
+    auxiliar1=""
+    if tante!=None and (tante.color == tmp1.color) and tmp.color  and (tante.color!=auxi):
+            auxiliar=tmp.color
+            tmp.color= tante.color
+            tante.color= auxiliar
+            auxi=auxiliar     
+    elif tsigue!=None and(tsigue.color == tmp1.color) and tmp.color and (tsigue.color!=auxi1):
+            auxiliar1=tmp.color
+            tmp.color= tsigue.color
+            tsigue.color=auxiliar1
+            auxi1=auxiliar1          
+    else:
+       Voltear(tante,tsigue,tmp,tmp1)
+
+def Vol(tante,tsigue,tmp,tmp1):
+    if(tmp.color=="W"):
+        tmp.color="B"
+    elif(tmp.color=="B"):
+        tmp.color="W"
+    else:
+        Intermambio(tante,tsigue,tmp,tmp1)
+
+def Buscando(pat,nome, pat1, pat2,auxi,auxi1):
+    tmp = pat1.lista_celda.inicio2
+    tmp1= pat2.lista_celda.inicio2
+    global archivo
+    archivo=open(str(pat)+".txt","w")
     print("Buscando cambios que se deben hacer")
+    archivo.write("Buscando cambios que se deben hacer\n")
     conta=0
     while tmp is not None:
         tante=tmp.anterior2
@@ -224,42 +290,61 @@ def Buscando( pat1, pat2):
         if (tmp.Ro == tmp1.Ro) and (tmp.Co == tmp1.Co): 
             if(tmp.color != tmp1.color):
                 print("Cambiar en la posicion: "+ tmp.Ro +","+ tmp.Co +" El patron: "+ tmp.color+ " por: "+ tmp1.color)
-                if(conta<2):
-                   Intermambio(tante,tsigue,tmp,tmp1)
-                   conta +=1
+                archivo.write("Cambiar en la posicion: "+ tmp.Ro +","+ tmp.Co +" El patron: "+ tmp.color+ " por: "+ tmp1.color+"\n")
+                if(float(nome.Si)<float(nome.Fi)):
+                    Intermambio(tante,tsigue,tmp,tmp1,auxi,auxi1)
+                    conta +=1
                 else:
-                    print("Ya no se puede hacer mas intercambios en esta operacion")
-
-                '''
-                if(conta<=2):
-                    if tante!=None and (tante.color == tmp1.color) and tmp.color:
-                        print("Intercambio piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" por el piso: "+ tante.Ro +","+ tante.Co)  
-                        tmp.color= tante.color
-                    elif tsigue!=None and(tsigue.color == tmp1.color) and tmp.color:
-                        print("Intercambio piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" por el piso: "+ tsigue.Ro +","+ tsigue.Co)  
-                        tmp.color= tsigue.color
-                    else:
-                        print("No se puede intercambiar")
-                '''
+                    Voltear(tante,tsigue,tmp,tmp1)
+                    conta +=1
             else:
                 print("Patron correcto en la posicion: "+ tmp.Ro +","+ tmp.Co)
-
+                archivo.write("Patron correcto en la posicion: "+ tmp.Ro +","+ tmp.Co+"\n")
         else:
             print("No se puede hacer cambios")
+            archivo.write("No se puede hacer cambios\n")
             
         tmp = tmp.siguiente2
         tmp1= tmp1.siguiente2
     pat1.lista_celda.imprimirDobleEnlaPa()
     
-def Intermambio(tante,tsigue,tmp,tmp1):
-        if tante!=None and (tante.color == tmp1.color) and tmp.color:
+def Intermambio(tante,tsigue,tmp,tmp1,auxi,auxi1):
+    global auxiliar
+    global auxiliar1 
+    auxiliar=""
+    auxiliar1=""
+    if tante!=None and (tante.color == tmp1.color) and tmp.color  and (tante.color!=auxi):
             print("Intercambio piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" por el piso: "+ tante.Ro +","+ tante.Co)  
+            archivo.write("Intercambio piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" por el piso: "+ tante.Ro +","+ tante.Co+"\n")
+            auxiliar=tmp.color
             tmp.color= tante.color
-        elif tsigue!=None and(tsigue.color == tmp1.color) and tmp.color:
+            tante.color= auxiliar
+            auxi=auxiliar     
+    elif tsigue!=None and(tsigue.color == tmp1.color) and tmp.color and (tsigue.color!=auxi1):
             print("Intercambio piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" por el piso: "+ tsigue.Ro +","+ tsigue.Co)  
+            archivo.write("Intercambio piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" por el piso: "+ tsigue.Ro +","+ tsigue.Co+"\n")
+            auxiliar1=tmp.color
             tmp.color= tsigue.color
-        else:
-            print("No se puede intercambiar")
+            tsigue.color=auxiliar1
+            auxi1=auxiliar1          
+    else:
+       Voltear(tante,tsigue,tmp,tmp1)
+
+def Voltear(tante,tsigue,tmp,tmp1):
+    if(tmp.color=="W"):
+        print("Volteo del piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" al color: B")  
+        archivo.write("Volteo del piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" al color: B\n")
+        tmp.color="B"
+    elif(tmp.color=="B"):
+        print("Volteo del piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" al color: W")  
+        archivo.write("Volteo del piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" al color: W\n")
+        tmp.color="W"
+    else:
+        Intermambio(tante,tsigue,tmp,tmp1)
+
+def Genrartxt(pat1):
+    archivo.close()
+    webbrowser.open_new_tab(pat1+".txt")
             
 # Inicio de ejecucion
 if __name__ == '__main__':
