@@ -1,19 +1,19 @@
-digraph G { bgcolor="yellow:red" 
-  fontname="Helvetica,Arial,sans-serif"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  subgraph cluster1 {fillcolor="blue:green" style="filled"
-    node [shape=diamond fillcolor="gold:brown" style="radial" gradientangle=180]
-    a0 [label=<
- <TABLE border="10" cellspacing="10" cellpadding="10" style="rounded" bgcolor="/rdylgn11/1:/rdylgn11/11" gradientangle="315">
-  <TR><TD border="3"  bgcolor="/rdylgn11/1:/rdylgn11/2">00</TD>
-  <TD border="3"  bgcolor="/rdylgn11/2:/rdylgn11/3">01</TD>
-  <TD border="3"  bgcolor="/rdylgn11/3:/rdylgn11/4">02</TD>
-  <TD border="3"  bgcolor="/rdylgn11/4:/rdylgn11/5">03</TD>
-  </TR>
-  
-</TABLE>>];
-
+digraph G { 
+  node [shape=box fillcolor="pink" style=filled]
+  subgraph cluster_p {
+      label="Reporte Patrones"
+      bgcolor="pink:yellow" nodoP[label="piso1" shape="box"];
+  name0[label="W" shape="box"];
+  name1[label="B" shape="box"];
+  name2[label="W" shape="box"];
+  name3[label="W" shape="box"];
+  name4[label="B" shape="box"];
+  name5[label="W" shape="box"];
+  nodoP ->name0;
+  nodoP ->name1;
+  name0 ->name2;
+  name1 ->name3;
+  name2 ->name4;
+  name3 ->name5;
 }
-
 }

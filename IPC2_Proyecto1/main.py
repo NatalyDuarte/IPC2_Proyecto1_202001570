@@ -43,6 +43,7 @@ def Menu(opcion):
         if pisos!=None:
             pisos.ordenar()
             print("Pisos cargados ordenados alfabeticamente")
+            print("Nombre---R---C---F---S")
             pisos.imprimirSimpleEnla()
             Inicio()
         else:
@@ -55,6 +56,7 @@ def Menu(opcion):
             nome = pisos.getPiso(nome)
             nome.lista_patron.OrdenarPatron()
             print("Patrones cargados ordenados alfabeticamente")
+            print("Nombre----patron")
             nome.lista_patron.imprimirSimpleEnlaPa()
             Inicio()
         else:
@@ -266,7 +268,7 @@ def Inter(tante,tsigue,tmp,tmp1,auxi,auxi1):
             tsigue.color=auxiliar1
             auxi1=auxiliar1          
     else:
-       Voltear(tante,tsigue,tmp,tmp1)
+       Vol(tante,tsigue,tmp,tmp1)
 
 def Vol(tante,tsigue,tmp,tmp1):
     if(tmp.color=="W"):
@@ -274,7 +276,7 @@ def Vol(tante,tsigue,tmp,tmp1):
     elif(tmp.color=="B"):
         tmp.color="W"
     else:
-        Intermambio(tante,tsigue,tmp,tmp1)
+        Inter(tante,tsigue,tmp,tmp1,auxi,auxi1)
 
 def Buscando(pat,nome, pat1, pat2,auxi,auxi1):
     tmp = pat1.lista_celda.inicio2
@@ -340,7 +342,7 @@ def Voltear(tante,tsigue,tmp,tmp1):
         archivo.write("Volteo del piso en la posicion: "+ tmp.Ro +","+ tmp.Co +" al color: W\n")
         tmp.color="W"
     else:
-        Intermambio(tante,tsigue,tmp,tmp1)
+        Intermambio(tante,tsigue,tmp,tmp1,auxi,auxi1)
 
 def Genrartxt(pat1):
     archivo.close()

@@ -1,0 +1,10 @@
+Buscando cambios que se deben hacer
+Patron correcto en la posicion: 0,0
+Patron correcto en la posicion: 0,1
+Patron correcto en la posicion: 0,2
+Patron correcto en la posicion: 0,3
+Patron correcto en la posicion: 1,0
+Patron correcto en la posicion: 1,1
+Cambiar en la posicion: 1,2 El patron: B por: W
+Volteo del piso en la posicion: 1,2 al color: W
+Patron correcto en la posicion: 1,3
